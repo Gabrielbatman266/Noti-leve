@@ -1,0 +1,49 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.gabriel.notileve'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.gabriel.notileve'
+        minSdk 23
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+    }
+
+    // Chave fixa: assim cada APK novo instala por cima do antigo (sem desinstalar).
+    signingConfigs {
+        leve {
+            storeFile file('noti-leve.jks')
+            storePassword 'notileve123'
+            keyAlias 'notileve'
+            keyPassword 'notileve123'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            signingConfig signingConfigs.leve
+        }
+        debug {
+            signingConfig signingConfigs.leve
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        encoding 'UTF-8'
+    }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
